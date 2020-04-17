@@ -2,7 +2,7 @@ import time
 
 from sklearn.metrics import accuracy_score
 
-from classification_project.ClassificationResult import ClassificationResult
+from Classification_Project.ClassificationResult import ClassificationResult
 
 
 class ClassifierEngine:

@@ -8,7 +8,7 @@ from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from classification_project.IllegalArgumentException import IllegalArgumentException
+from Classification_Project.IllegalArgumentException import IllegalArgumentException
 
 
 class ClassifierFactory:

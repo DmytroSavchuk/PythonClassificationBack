@@ -1,7 +1,7 @@
 import pandas as pd
 
-from classification_project.Data import Data
-from classification_project.FileUtils import FileUtils
+from Classification_Project.Data import Data
+from Classification_Project.FileUtils import FileUtils
 
 
 class DataExtractor:
