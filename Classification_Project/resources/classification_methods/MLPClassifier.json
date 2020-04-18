@@ -1,0 +1,9 @@
+{
+  "name": "MLPClassifier",
+  "arguments": {
+    "hidden_layer_sizes": "NUMBER_LIST",
+    "activation": "STRING",
+    "solver": "STRING",
+    "alpha": "NUMBER"
+  }
+}

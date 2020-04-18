@@ -1,0 +1,8 @@
+{
+  "name": "DecisionTreeClassifier",
+  "arguments": {
+    "max_depth": "NUMBER",
+    "min_samples_split": "NUMBER",
+    "random_state": "NUMBER"
+  }
+}

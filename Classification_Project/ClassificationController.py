@@ -21,6 +21,11 @@ scheduler = Scheduler()
 scheduler.schedule_clearing_tmp_folder()
 
 
+@app.route('/', methods=['GET'])
+def home_page():
+    return 'Hello world from PythonClassification!'
+
+
 @app.route('/test-data', methods=['POST'])
 def upload_test_data():
     file_utils.save_session_based_txt_file(request.files['file'], 'test_data')
@@ -45,6 +50,11 @@ def is_test_data_for_session():
 def is_train_data_for_session():
     return json.dumps({'file_exists': file_utils.is_file_for_session('train_data')}), \
            200, {'ContentType': 'application/json'}
+
+
+@app.route('/classification/methods', methods=['GET'])
+def get_all_classification_methods():
+    return classification_service.get_available_methods()
 
 
 @app.route('/classification', methods=['POST'])

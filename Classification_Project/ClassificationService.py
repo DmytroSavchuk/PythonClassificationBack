@@ -1,15 +1,17 @@
+import json
 from collections import namedtuple
 
 from flask import session
 from werkzeug.exceptions import BadRequest
 
-from classification_project.Archiver import Archiver
-from classification_project.ClassificationResponseDto import ClassificationResponseDto
-from classification_project.ClassifierEngine import ClassifierEngine
-from classification_project.ClassifierFactory import ClassifierFactory
-from classification_project.DataExtractor import DataExtractor
-from classification_project.MaxScaler import MaxScaler
-from classification_project.PolynomialFactory import PolynomialFactory
+from Classification_Project.Archiver import Archiver
+from Classification_Project.ClassificationMethodReader import ClassificationMethodReader
+from Classification_Project.ClassificationResponseDto import ClassificationResponseDto
+from Classification_Project.ClassifierEngine import ClassifierEngine
+from Classification_Project.ClassifierFactory import ClassifierFactory
+from Classification_Project.DataExtractor import DataExtractor
+from Classification_Project.MaxScaler import MaxScaler
+from Classification_Project.PolynomialFactory import PolynomialFactory
 
 
 class ClassificationService:
@@ -19,6 +21,7 @@ class ClassificationService:
         self.data_extractor = DataExtractor()
         self.scaler = MaxScaler()
         self.archiver = Archiver()
+        self.method_reader = ClassificationMethodReader()
 
     def classify_and_get_info(self, classification_dto):
         try:
@@ -44,6 +47,9 @@ class ClassificationService:
 
         except Exception as e:
             raise BadRequest(str(e))
+
+    def get_available_methods(self):
+        return json.dumps(ClassificationMethodReader().read_all_available_methods())
 
     def __classify(self, classification_dto):
         train_data = self.data_extractor.extract_data('train_data')
