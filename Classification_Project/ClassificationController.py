@@ -11,7 +11,7 @@ from Classification_Project.Scheduler import Scheduler
 
 app = Flask(__name__)
 app.secret_key = ApplicationConstants.APP_SECRET_KEY.value
-host = ApplicationConstants.LOCAL_CLIENT_HOST.value
+host = ApplicationConstants.CLIENT_HOST.value
 
 mapper = ClassificationRequestDtoMapper()
 classification_service = ClassificationService()
@@ -23,7 +23,7 @@ scheduler.schedule_clearing_tmp_folder()
 
 @app.route('/', methods=['GET'])
 def home_page():
-    return 'Hello world from PythonClassification!'
+    return json.dumps({'result': 'Hello world from PythonClassification!'}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/test-data', methods=['POST'])
