@@ -1,0 +1,17 @@
+{
+  "name": "SVC",
+  "arguments": {
+    "C": "NUMBER",
+    "kernel": "STRING",
+    "degree": "NUMBER",
+    "gamma": "STRING",
+    "coef0": "NUMBER",
+    "shrinking": "BOOLEAN",
+    "probability": "BOOLEAN",
+    "tol": "NUMBER",
+    "cache_size": "NUMBER",
+    "verbose": "NUMBER",
+    "random_state": "STRING",
+    "max_iter": "NUMBER"
+  }
+}

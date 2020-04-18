@@ -1,0 +1,8 @@
+{
+  "name": "ExtraTreesClassifier",
+  "arguments": {
+    "class_weight": "STRING",
+    "multi_class": "STRING",
+    "solver": "STRING"
+  }
+}

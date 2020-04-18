@@ -1,0 +1,18 @@
+{
+  "name": "LinearSVC",
+  "arguments": {
+    "penalty": "STRING",
+    "loss": "STRING",
+    "dual": "BOOLEAN",
+    "tol": "NUMBER",
+    "C": "NUMBER",
+    "multi_class": "STRING",
+    "fit_intercept": "BOOLEAN",
+    "intercept_scaling": "NUMBER",
+    "class_weight": "NUMBER",
+    "verbose": "BOOLEAN",
+    "max_iter": "NUMBER",
+    "decision_function_shape": "STRING",
+    "random_state": "STRING"
+  }
+}
