@@ -24,6 +24,6 @@ def clearing_tmp_folder_action():
 def clear_tmp_folder_job():
     print("Clearing...")
 
-    shutil.rmtree('resources/tmp')
+    shutil.rmtree('resources/uploads')
 
-    os.mkdir('resources/tmp')
+    os.mkdir('resources/uploads')
