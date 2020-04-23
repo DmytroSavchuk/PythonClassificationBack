@@ -9,6 +9,7 @@ from Classification_Project.ClassificationMethodReader import ClassificationMeth
 from Classification_Project.ClassificationResponseDto import ClassificationResponseDto
 from Classification_Project.ClassifierEngine import ClassifierEngine
 from Classification_Project.ClassifierFactory import ClassifierFactory
+from Classification_Project.ConsoleLogger import console_logger
 from Classification_Project.DataExtractor import DataExtractor
 from Classification_Project.MaxScaler import MaxScaler
 from Classification_Project.PolynomialFactory import PolynomialFactory
@@ -32,37 +33,51 @@ class ClassificationService:
             return self.__map_to_response_dto(classification_result)
 
         except Exception as e:
+            console_logger.error(f'Classification failed. {str(e)}')
             raise BadRequest(str(e))
 
     def classify_and_get_data(self):
         try:
             if session.get('last_classify_and_get_info_request') is None:
+                console_logger.error('Can\'t get data. No calculations were performed.')
                 raise Exception('Can\'t get data. No calculations were performed.')
 
             classification_result = self.__classify(
                 namedtuple('ClassificationRequestDto', session['last_classify_and_get_info_request'].keys())
                 (*session['last_classify_and_get_info_request'].values()))
 
-            return self.archiver.archive(classification_result.train_prediction, classification_result.test_prediction)
+            result = self.archiver.archive(classification_result.train_prediction,
+                                           classification_result.test_prediction)
+
+            return result
 
         except Exception as e:
+            console_logger.error(f'Classification failed. {str(e)}')
             raise BadRequest(str(e))
 
     def get_available_methods(self):
         return json.dumps(ClassificationMethodReader().read_all_available_methods())
 
     def __classify(self, classification_dto):
+        console_logger.info('Extracting train data')
         train_data = self.data_extractor.extract_data('train_data')
+        console_logger.info('Extracting test data')
         test_data = self.data_extractor.extract_data('test_data')
 
+        console_logger.info("Data transformation...")
         self.__fit(train_data, test_data)
         self.__polynomial_transformation(train_data, test_data, classification_dto.polynomial_name,
                                          classification_dto.polynomial_params_dictionary)
+        console_logger.info('Data transformation finished')
 
         classifier = self.classifier_factory.get_classifier(classification_dto.classifier_name,
                                                             classification_dto.classifier_params_dictionary)
 
-        return ClassifierEngine(classifier).classify(train_data, test_data)
+        console_logger.info('Classification started...')
+        result = ClassifierEngine(classifier).classify(train_data, test_data)
+        console_logger.info('Classification successfully finished...')
+
+        return result
 
     def __fit(self, train_data, test_data):
         self.scaler.fit(train_data.x)
