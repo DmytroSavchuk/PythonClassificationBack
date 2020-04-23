@@ -1,6 +1,6 @@
 {
   "name": "RandomForestClassifier",
-  "arguments": {
+  "methodArgs": {
     "max_depth": "NUMBER",
     "min_samples_split": "NUMBER",
     "random_state": "NUMBER"

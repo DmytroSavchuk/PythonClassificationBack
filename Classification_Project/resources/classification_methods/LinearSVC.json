@@ -1,6 +1,6 @@
 {
   "name": "LinearSVC",
-  "arguments": {
+  "methodArgs": {
     "penalty": "STRING",
     "loss": "STRING",
     "dual": "BOOLEAN",
