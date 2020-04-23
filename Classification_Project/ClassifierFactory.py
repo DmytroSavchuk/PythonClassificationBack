@@ -8,6 +8,7 @@ from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
+from Classification_Project.ConsoleLogger import console_logger
 from Classification_Project.IllegalArgumentException import IllegalArgumentException
 
 
@@ -28,6 +29,8 @@ class ClassifierFactory:
 
         self.__fill_classifier_params(classifier, params_dictionary)
 
+        console_logger.info(f'Using {classifier_class_name} with parameters: {params_dictionary}')
+
         return classifier
 
     def __fill_classifier_params(self, classifier, params_dictionary):
@@ -45,4 +48,3 @@ class ClassifierFactory:
 
         raise IllegalArgumentException('Given classifier name is incorrect. There is no classifier with name %s.' %
                                        classifier_class_name)
-

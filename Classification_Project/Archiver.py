@@ -5,9 +5,13 @@ from zipfile import ZipFile
 
 import numpy as np
 
+from Classification_Project.ConsoleLogger import console_logger
+
 
 class Archiver:
     def archive(self, *args):
+        console_logger.info('Archiving started...')
+
         tmp_file_paths = []
 
         for arg in args:
@@ -17,10 +21,12 @@ class Archiver:
 
         self.__remove_tmp_files(tmp_file_paths)
 
+        console_logger.info('Archiving successfully finished')
+
         return result
 
     def __save_tmp_file(self, content):
-        file_path = 'resources\\tmp\\' + str(uuid.uuid1()) + '.csv'
+        file_path = 'resources\\uploads\\' + str(uuid.uuid1()) + '.csv'
 
         np.savetxt(file_path, content)
 
