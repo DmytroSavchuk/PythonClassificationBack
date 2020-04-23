@@ -1,6 +1,6 @@
 {
   "name": "SVC",
-  "arguments": {
+  "methodArgs": {
     "C": "NUMBER",
     "kernel": "STRING",
     "degree": "NUMBER",

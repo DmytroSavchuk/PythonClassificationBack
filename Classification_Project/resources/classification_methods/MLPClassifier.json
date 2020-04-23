@@ -1,6 +1,6 @@
 {
   "name": "MLPClassifier",
-  "arguments": {
+  "methodArgs": {
     "hidden_layer_sizes": "NUMBER_LIST",
     "activation": "STRING",
     "solver": "STRING",

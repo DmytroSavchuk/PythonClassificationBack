@@ -1,6 +1,6 @@
 {
   "name": "ExtraTreesClassifier",
-  "arguments": {
+  "methodArgs": {
     "n_estimators": "NUMBER",
     "max_depth": "NUMBER",
     "random_state": "NUMBER"
