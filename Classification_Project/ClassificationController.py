@@ -10,8 +10,8 @@ from Classification_Project.FileUtils import FileUtils
 from Classification_Project.Scheduler import Scheduler
 
 app = Flask(__name__)
-app.secret_key = ApplicationConstants.APP_SECRET_KEY.value
-host = ApplicationConstants.CLIENT_HOST.value
+app.secret_key = ApplicationConstants.get_constant('APP_SECRET_KEY')
+host = ApplicationConstants.get_constant('CLIENT_HOST')
 
 mapper = ClassificationRequestDtoMapper()
 classification_service = ClassificationService()
