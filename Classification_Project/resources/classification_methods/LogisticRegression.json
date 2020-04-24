@@ -1,5 +1,5 @@
 {
-  "name": "ExtraTreesClassifier",
+  "name": "LogisticRegression",
   "methodArgs": {
     "class_weight": "STRING",
     "multi_class": "STRING",
