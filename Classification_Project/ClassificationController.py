@@ -8,6 +8,7 @@ from Classification_Project.ClassificationRequestDtoMapper import Classification
 from Classification_Project.ClassificationService import ClassificationService
 from Classification_Project.FileUtils import FileUtils
 from Classification_Project.Scheduler import Scheduler
+from Classification_Project.SessionService import session_service
 
 app = Flask(__name__)
 app.secret_key = ApplicationConstants.get_constant('APP_SECRET_KEY')
@@ -70,10 +71,14 @@ def classify_and_get_data():
                      attachment_filename='classification_results.zip', as_attachment=True)
 
 
+@app.route('/session_id', methods=['POST'])
+def get_session_id():
+    return session_service.generate_session_id()
+
+
 @app.before_request
-def set_session_id():
-    if 'session_id' not in session:
-        session['session_id'] = uuid.uuid1()
+def process_request():
+    session_service.process_request(request)
 
 
 @app.after_request

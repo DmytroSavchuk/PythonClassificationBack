@@ -5,25 +5,34 @@ import time
 
 import schedule
 
+from Classification_Project.ConsoleLogger import console_logger
+from Classification_Project.SessionService import session_service
+
 tmp_clear_hour_interval = 6
+session_storage_clear_hour_interval = 6
 
 
 class Scheduler:
     def schedule_clearing_tmp_folder(self):
-        threading.Thread(target=clearing_tmp_folder_action).start()
+        threading.Thread(target=execute).start()
 
 
-def clearing_tmp_folder_action():
-    schedule.every(tmp_clear_hour_interval).hours.do(clear_tmp_folder_job)
+def execute():
+    schedule.every(tmp_clear_hour_interval).hours.do(__clear_tmp_folder_job)
+    schedule.every(session_storage_clear_hour_interval).hours.do(__clear_session_id_storage)
 
     while 1:
         schedule.run_pending()
         time.sleep(1)
 
 
-def clear_tmp_folder_job():
-    print("Clearing...")
+def __clear_tmp_folder_job():
+    console_logger.info("Clearing tmp folder...")
 
     shutil.rmtree('resources/uploads')
 
     os.mkdir('resources/uploads')
+
+
+def __clear_session_id_storage():
+    session_service.clear_session_storage()

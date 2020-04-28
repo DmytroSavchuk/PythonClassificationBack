@@ -11,7 +11,8 @@ CONSTANTS_MAP = {
     'APP_SECRET_KEY': 'e8fd411b86609d1b6416e1e3da69ab27',
     'AVAILABLE_CLASSIFICATION_METHODS_FOLDER_PATH': 'Classification_Project/resources/classification_methods'
     if is_production else 'resources/classification_methods',
-    'UPLOADS_FOLDER_PATH': 'Classification_Project/resources/uploads' if is_production else 'resources/uploads'
+    'UPLOADS_FOLDER_PATH': 'Classification_Project/resources/uploads' if is_production else 'resources/uploads',
+    'SESSION_TTL': 3 * 60 * 60 * 1000
 }
 
 
