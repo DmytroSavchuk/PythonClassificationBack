@@ -1,7 +1,6 @@
 import json
-import uuid
 
-from flask import Flask, send_file, request, session
+from flask import Flask, send_file, request
 
 from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ClassificationRequestDtoMapper import ClassificationRequestDtoMapper
@@ -29,14 +28,14 @@ def home_page():
 
 @app.route('/test-data', methods=['POST'])
 def upload_test_data():
-    file_utils.save_session_based_txt_file(request.files['file'], 'test_data')
+    file_utils.save_session_based_txt_file(request.files['file'], 'test_data.txt')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/train-data', methods=['POST'])
 def upload_train_data():
-    file_utils.save_session_based_txt_file(request.files['file'], 'train_data')
+    file_utils.save_session_based_txt_file(request.files['file'], 'train_data.txt')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
@@ -67,7 +66,7 @@ def classify_and_get_info():
 
 @app.route('/classification-data', methods=['POST'])
 def classify_and_get_data():
-    return send_file(classification_service.classify_and_get_data(),
+    return send_file(classification_service.get_classification_result_archive(),
                      attachment_filename='classification_results.zip', as_attachment=True)
 
 
@@ -78,7 +77,7 @@ def get_session_id():
 
 @app.before_request
 def process_request():
-    session_service.process_request(request)
+    session_service.process_request()
 
 
 @app.after_request
