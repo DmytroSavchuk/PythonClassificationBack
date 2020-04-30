@@ -70,11 +70,6 @@ def classify_and_get_data():
                      attachment_filename='classification_results.zip', as_attachment=True)
 
 
-@app.route('/session_id', methods=['POST'])
-def get_session_id():
-    return session_service.generate_session_id()
-
-
 @app.before_request
 def process_request():
     session_service.process_request()
