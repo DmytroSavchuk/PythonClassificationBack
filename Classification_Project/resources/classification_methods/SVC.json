@@ -4,14 +4,15 @@
     "C": "NUMBER",
     "kernel": "STRING",
     "degree": "NUMBER",
-    "gamma": "STRING",
+    "gamma": "NUMBER",
     "coef0": "NUMBER",
     "shrinking": "BOOLEAN",
     "probability": "BOOLEAN",
     "tol": "NUMBER",
     "cache_size": "NUMBER",
-    "verbose": "NUMBER",
-    "random_state": "STRING",
-    "max_iter": "NUMBER"
+    "verbose": "BOOLEAN",
+    "random_state": "NUMBER",
+    "max_iter": "NUMBER",
+    "decision_function_shape": "STRING"
   }
 }
