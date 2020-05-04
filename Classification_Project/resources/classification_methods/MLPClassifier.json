@@ -1,9 +1,23 @@
 {
   "name": "MLPClassifier",
   "methodArgs": {
-    "hidden_layer_sizes": "NUMBER_LIST",
-    "activation": "STRING",
-    "solver": "STRING",
-    "alpha": "NUMBER"
+    "hidden_layer_sizes": {
+      "type": "NUMBER_LIST",
+      "defaultValue": [100, 80, 20]
+    },
+    "activation": {
+      "type": "STRING_ENUM",
+      "defaultValue": "relu",
+      "possibleValues": ["relu", "identity", "logistic", "tanh"]
+    },
+    "solver": {
+      "type": "STRING_ENUM",
+      "defaultValue": "adam",
+      "possibleValues": ["adam", "lbfgs", "sgd"]
+    },
+    "alpha": {
+      "type": "NUMBER",
+      "defaultValue": 0.0001
+    }
   }
 }

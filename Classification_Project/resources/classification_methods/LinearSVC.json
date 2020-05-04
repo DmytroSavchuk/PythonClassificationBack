@@ -1,18 +1,56 @@
 {
   "name": "LinearSVC",
   "methodArgs": {
-    "penalty": "STRING",
-    "loss": "STRING",
-    "dual": "BOOLEAN",
-    "tol": "NUMBER",
-    "C": "NUMBER",
-    "multi_class": "STRING",
-    "fit_intercept": "BOOLEAN",
-    "intercept_scaling": "NUMBER",
-    "class_weight": "NUMBER",
-    "verbose": "BOOLEAN",
-    "max_iter": "NUMBER",
-    "decision_function_shape": "STRING",
-    "random_state": "STRING"
+    "penalty": {
+      "type": "STRING_ENUM",
+      "defaultValue": "l2",
+      "possibleValues": ["l1", "l2"]
+    },
+    "loss": {
+      "type": "STRING_ENUM",
+      "defaultValue": "squared_hinge",
+      "possibleValues": ["hinge", "squared_hinge"]
+    },
+    "dual": {
+      "type": "BOOLEAN",
+      "defaultValue": true
+    },
+    "tol": {
+      "type": "NUMBER",
+      "defaultValue": 0.0001
+    },
+    "C": {
+      "type": "NUMBER",
+      "defaultValue": 1.0
+    },
+    "multi_class": {
+      "type": "STRING_ENUM",
+      "defaultValue": "ovr",
+      "possibleValues": ["ovr", "crammer_singer"]
+    },
+    "fit_intercept": {
+      "type": "BOOLEAN",
+      "defaultValue": true
+    },
+    "intercept_scaling": {
+      "type": "NUMBER",
+      "defaultValue": 1
+    },
+    "class_weight": {
+      "type": "UNKNOWN",
+      "defaultValue": null
+    },
+    "verbose": {
+      "type": "NUMBER",
+      "defaultValue": 0
+    },
+    "random_state": {
+      "type": "NUMBER",
+      "defaultValue": null
+    },
+    "max_iter": {
+      "type": "NUMBER",
+      "defaultValue": 1000
+    }
   }
 }
