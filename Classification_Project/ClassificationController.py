@@ -1,13 +1,13 @@
 import json
-import uuid
 
-from flask import Flask, send_file, request, session
+from flask import Flask, send_file, request
 
 from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ClassificationRequestDtoMapper import ClassificationRequestDtoMapper
 from Classification_Project.ClassificationService import ClassificationService
 from Classification_Project.FileUtils import FileUtils
 from Classification_Project.Scheduler import Scheduler
+from Classification_Project.SessionService import session_service
 
 app = Flask(__name__)
 app.secret_key = ApplicationConstants.get_constant('APP_SECRET_KEY')
@@ -28,14 +28,14 @@ def home_page():
 
 @app.route('/test-data', methods=['POST'])
 def upload_test_data():
-    file_utils.save_session_based_txt_file(request.files['file'], 'test_data')
+    file_utils.save_session_based_txt_file(request.files['file'], 'test_data.txt')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/train-data', methods=['POST'])
 def upload_train_data():
-    file_utils.save_session_based_txt_file(request.files['file'], 'train_data')
+    file_utils.save_session_based_txt_file(request.files['file'], 'train_data.txt')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
@@ -64,16 +64,15 @@ def classify_and_get_info():
     return classification_service.classify_and_get_info(request_params).serialize
 
 
-@app.route('/classification-data', methods=['POST'])
+@app.route('/classification-data', methods=['GET'])
 def classify_and_get_data():
-    return send_file(classification_service.classify_and_get_data(),
+    return send_file(classification_service.get_classification_result_archive(),
                      attachment_filename='classification_results.zip', as_attachment=True)
 
 
 @app.before_request
-def set_session_id():
-    if 'session_id' not in session:
-        session['session_id'] = uuid.uuid1()
+def process_request():
+    session_service.process_request()
 
 
 @app.after_request

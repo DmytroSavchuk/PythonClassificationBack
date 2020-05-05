@@ -1,7 +1,6 @@
 import json
-from collections import namedtuple
+from pathlib import Path
 
-from flask import session
 from werkzeug.exceptions import BadRequest
 
 from Classification_Project.Archiver import Archiver
@@ -11,6 +10,7 @@ from Classification_Project.ClassifierEngine import ClassifierEngine
 from Classification_Project.ClassifierFactory import ClassifierFactory
 from Classification_Project.ConsoleLogger import console_logger
 from Classification_Project.DataExtractor import DataExtractor
+from Classification_Project.FileUtils import file_utils
 from Classification_Project.MaxScaler import MaxScaler
 from Classification_Project.PolynomialFactory import PolynomialFactory
 
@@ -28,26 +28,24 @@ class ClassificationService:
         try:
             classification_result = self.__classify(classification_dto)
 
-            session['last_classify_and_get_info_request'] = classification_dto.serialize
+            file_utils.numpy_save_session_based_txt_file(classification_result.train_prediction,
+                                                         'train_predictions.csv')
+            file_utils.numpy_save_session_based_txt_file(classification_result.test_prediction, 'test_predictions.csv')
 
             return self.__map_to_response_dto(classification_result)
 
         except Exception as e:
-            console_logger.error(f'Classification failed. {str(e)}')
+            console_logger.error(f'Classification failed. {str(e)}', e)
             raise BadRequest(str(e))
 
-    def classify_and_get_data(self):
+    def get_classification_result_archive(self):
         try:
-            if session.get('last_classify_and_get_info_request') is None:
+            if (not Path(file_utils.get_session_based_file_path('test_predictions.csv')).is_file()) or \
+                    (not Path(file_utils.get_session_based_file_path('train_predictions.csv')).is_file()):
                 console_logger.error('Can\'t get data. No calculations were performed.')
                 raise Exception('Can\'t get data. No calculations were performed.')
 
-            classification_result = self.__classify(
-                namedtuple('ClassificationRequestDto', session['last_classify_and_get_info_request'].keys())
-                (*session['last_classify_and_get_info_request'].values()))
-
-            result = self.archiver.archive(classification_result.train_prediction,
-                                           classification_result.test_prediction)
+            result = self.archiver.archive_session_based_files()
 
             return result
 
@@ -60,9 +58,9 @@ class ClassificationService:
 
     def __classify(self, classification_dto):
         console_logger.info('Extracting train data')
-        train_data = self.data_extractor.extract_data('train_data')
+        train_data = self.data_extractor.extract_data('train_data.txt')
         console_logger.info('Extracting test data')
-        test_data = self.data_extractor.extract_data('test_data')
+        test_data = self.data_extractor.extract_data('test_data.txt')
 
         console_logger.info("Data transformation...")
         self.__fit(train_data, test_data)

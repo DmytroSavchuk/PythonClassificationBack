@@ -3,6 +3,7 @@
   "methodArgs": {
     "n_estimators": "NUMBER",
     "max_depth": "NUMBER",
+    "min_samples_split": "NUMBER",
     "random_state": "NUMBER"
   }
 }

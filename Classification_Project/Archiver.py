@@ -1,38 +1,24 @@
-import os
-import uuid
 from io import BytesIO
 from zipfile import ZipFile
 
-import numpy as np
-
 from Classification_Project.ConsoleLogger import console_logger
+from Classification_Project.FileUtils import file_utils
 
 
 class Archiver:
-    def archive(self, *args):
+    def archive_session_based_files(self):
         console_logger.info('Archiving started...')
 
-        tmp_file_paths = []
+        test_predictions_file_path = file_utils.get_session_based_file_path('test_predictions.csv')
+        train_predictions_file_path = file_utils.get_session_based_file_path('train_predictions.csv')
 
-        for arg in args:
-            tmp_file_paths.append(self.__save_tmp_file(arg))
-
-        result = self.__archive_temp_files(tmp_file_paths)
-
-        self.__remove_tmp_files(tmp_file_paths)
+        result = self.__archive_files([test_predictions_file_path, train_predictions_file_path])
 
         console_logger.info('Archiving successfully finished')
 
         return result
 
-    def __save_tmp_file(self, content):
-        file_path = 'resources\\uploads\\' + str(uuid.uuid1()) + '.csv'
-
-        np.savetxt(file_path, content)
-
-        return file_path
-
-    def __archive_temp_files(self, tmp_file_paths):
+    def __archive_files(self, tmp_file_paths):
         memory_file = BytesIO()
 
         with ZipFile(memory_file, 'w') as archiver:
@@ -42,7 +28,3 @@ class Archiver:
         memory_file.seek(0)
 
         return memory_file
-
-    def __remove_tmp_files(self, tmp_file_paths):
-        for path in tmp_file_paths:
-            os.remove(path)
