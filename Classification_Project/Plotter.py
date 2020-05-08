@@ -30,8 +30,7 @@ class Plotter:
         return result
 
     def __config_plot(self):
-        font = {'family': 'consolas',
-                'weight': 'regular',
+        font = {'weight': 'regular',
                 'size': 15}
 
         plt.rc('font', **font)
