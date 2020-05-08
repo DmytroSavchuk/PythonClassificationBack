@@ -1,5 +1,6 @@
 {
   "name": "LinearSVC",
+  "label": "Linear SVC",
   "methodArgs": {
     "penalty": {
       "type": "STRING_ENUM",

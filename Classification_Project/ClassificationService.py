@@ -12,6 +12,7 @@ from Classification_Project.DefaultClassificationResponseDto import DefaultClass
 from Classification_Project.FileUtils import file_utils
 from Classification_Project.MaxScaler import MaxScaler
 from Classification_Project.MethodResultsArchiver import MethodResultsArchiver
+from Classification_Project.Plotter import plotter
 from Classification_Project.PolynomialFactory import PolynomialFactory, polynomial_factory
 
 
@@ -70,7 +71,13 @@ class ClassificationService:
             file_utils.numpy_save_session_based_txt_file(result[method_name].test_prediction,
                                                          method_name + '_test_predictions.csv')
 
-        return self.__map_to_default_response_dto(result)
+        return result
+
+    def build_fit_time_plot(self):
+        return plotter.build_histogram(self.compare_classification(), 'fit_time')
+
+    def build_test_accuracy_plot(self):
+        return plotter.build_histogram(self.compare_classification(), 'test_accuracy', descending=True)
 
     def __classify(self, classification_dto):
         console_logger.info('Extracting train data')
@@ -128,7 +135,7 @@ class ClassificationService:
         train_data.x = polynomial.fit_transform(train_data.x)
         test_data.x = polynomial.fit_transform(test_data.x)
 
-    def __map_to_default_response_dto(self, classification_result):
+    def map_to_default_response_dto(self, classification_result):
         mapped_result = {}
 
         for method_name in classification_result.keys():

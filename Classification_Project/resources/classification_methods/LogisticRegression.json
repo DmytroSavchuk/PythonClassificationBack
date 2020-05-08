@@ -1,5 +1,6 @@
 {
   "name": "LogisticRegression",
+  "label": "Logistic regression",
   "methodArgs": {
     "class_weight": {
       "type": "STRING_ENUM",

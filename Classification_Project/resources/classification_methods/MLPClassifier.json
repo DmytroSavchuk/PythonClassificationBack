@@ -1,5 +1,6 @@
 {
   "name": "MLPClassifier",
+  "label": "MLP classifier",
   "methodArgs": {
     "hidden_layer_sizes": {
       "type": "NUMBER_LIST",

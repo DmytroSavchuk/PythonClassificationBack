@@ -1,5 +1,6 @@
 {
   "name": "DecisionTreeClassifier",
+  "label": "Decision tree classifier",
   "methodArgs": {
     "max_depth": {
       "type": "NUMBER",

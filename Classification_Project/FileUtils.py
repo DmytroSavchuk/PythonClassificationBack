@@ -1,3 +1,4 @@
+import io
 import os
 from pathlib import Path
 
@@ -45,6 +46,18 @@ class FileUtils:
         if Path(self.get_session_based_file_path(file_name)).is_file():
             return True
         return False
+
+    def read_file(self, filepath, delete_after_read=False):
+        file = io.BytesIO()
+        with open(filepath, 'rb') as fo:
+            file.write(fo.read())
+
+        file.seek(0)
+
+        if delete_after_read:
+            os.remove(filepath)
+
+        return file
 
 
 file_utils = FileUtils()

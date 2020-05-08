@@ -1,5 +1,6 @@
 {
   "name": "RandomForestClassifier",
+  "label": "Random forest classifier",
   "methodArgs": {
     "n_estimators": {
       "type": "NUMBER",

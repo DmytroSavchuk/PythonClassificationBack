@@ -13,7 +13,9 @@ class SessionService:
         ('/test-data', 'GET'),
         ('/train-data', 'GET'),
         ('/classification', 'POST'),
-        ('/classification-data', 'POST')
+        ('/classification-data', 'POST'),
+        ('/compare-classification', 'GET'),
+        ('/fit-time-plot', 'GET')
     ]
 
     def process_request(self):

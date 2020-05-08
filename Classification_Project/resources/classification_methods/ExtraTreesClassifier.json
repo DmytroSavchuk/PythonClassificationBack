@@ -1,5 +1,6 @@
 {
   "name": "ExtraTreesClassifier",
+  "label": "Extra trees classifier",
   "methodArgs": {
     "n_estimators": {
       "type": "NUMBER",
