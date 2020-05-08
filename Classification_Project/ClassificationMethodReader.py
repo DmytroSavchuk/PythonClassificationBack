@@ -16,3 +16,6 @@ class ClassificationMethodReader:
                 result.append(json.load(method))
 
         return result
+
+
+classification_method_reader = ClassificationMethodReader()

@@ -20,3 +20,6 @@ class ClassificationRequestDtoMapper:
             raise BadRequest('Can\'t map parameters. Some parameters are missed or are invalid.')
 
         return result
+
+
+classification_request_mapper = ClassificationRequestDtoMapper()

@@ -4,6 +4,8 @@ from sklearn.preprocessing import PolynomialFeatures
 
 from Classification_Project.IllegalArgumentException import IllegalArgumentException
 
+DEFAULT_POLYNOMIAL_DEGREE = 2
+
 
 class PolynomialFactory:
     def __init__(self):
@@ -17,6 +19,9 @@ class PolynomialFactory:
         self.__fill_polynomial_params(polynomial, params_dictionary)
 
         return polynomial
+
+    def get_default_args_polynomial(self):
+        return PolynomialFeatures(degree=DEFAULT_POLYNOMIAL_DEGREE)
 
     def __fill_polynomial_params(self, polynomial, params_dictionary):
         for param in params_dictionary:
@@ -33,3 +38,6 @@ class PolynomialFactory:
 
         raise IllegalArgumentException('Given polynomial name is incorrect. There is no polynomial with name %s.' %
                                        polynomial_class_name)
+
+
+polynomial_factory = PolynomialFactory()

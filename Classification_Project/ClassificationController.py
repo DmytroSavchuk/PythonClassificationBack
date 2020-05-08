@@ -64,9 +64,14 @@ def classify_and_get_info():
     return classification_service.classify_and_get_info(request_params).serialize
 
 
+@app.route('/compare-classification', methods=['GET'])
+def classify_with_all_methods():
+    return classification_service.compare_classification().serialize
+
+
 @app.route('/classification-data', methods=['GET'])
 def classify_and_get_data():
-    return send_file(classification_service.get_classification_result_archive(),
+    return send_file(classification_service.get_classification_result_archive(request.args['method_name']),
                      attachment_filename='classification_results.zip', as_attachment=True)
 
 
