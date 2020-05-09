@@ -3,6 +3,7 @@ import copy
 from sklearn.preprocessing import PolynomialFeatures
 
 from Classification_Project.IllegalArgumentException import IllegalArgumentException
+from Classification_Project.WienerPolynomial import WienerPolynomial
 
 DEFAULT_POLYNOMIAL_DEGREE = 2
 
@@ -12,6 +13,7 @@ class PolynomialFactory:
         self.polynomial_prototypes = []
 
         self.polynomial_prototypes.append(PolynomialFeatures())
+        self.polynomial_prototypes.append(WienerPolynomial())
 
     def get_polynomial(self, polynomial_class_name, params_dictionary):
         polynomial = copy.deepcopy(self.__find_prototype(polynomial_class_name))
@@ -21,7 +23,7 @@ class PolynomialFactory:
         return polynomial
 
     def get_default_args_polynomial(self):
-        return PolynomialFeatures(degree=DEFAULT_POLYNOMIAL_DEGREE)
+        return WienerPolynomial(DEFAULT_POLYNOMIAL_DEGREE)
 
     def __fill_polynomial_params(self, polynomial, params_dictionary):
         for param in params_dictionary:

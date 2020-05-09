@@ -85,11 +85,12 @@ class ClassificationService:
         console_logger.info('Extracting test data')
         test_data = self.data_extractor.extract_data('test_data.txt')
 
-        console_logger.info("Data transformation...")
-        self.__fit(train_data, test_data)
-        self.__polynomial_transformation(train_data, test_data, classification_dto.polynomial_name,
-                                         classification_dto.polynomial_params_dictionary)
-        console_logger.info('Data transformation finished')
+        if classification_dto.is_polynomial_used:
+            console_logger.info("Data transformation...")
+            self.__fit(train_data, test_data)
+            self.__polynomial_transformation(train_data, test_data, classification_dto.polynomial_name,
+                                             classification_dto.polynomial_params_dictionary)
+            console_logger.info('Data transformation finished')
 
         classifier = self.classifier_factory.get_classifier(classification_dto.classifier_name,
                                                             classification_dto.classifier_params_dictionary)
