@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, send_file, request, make_response
+from flask import Flask, send_file, request
 
 from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ClassificationRequestDtoMapper import ClassificationRequestDtoMapper
@@ -83,6 +83,23 @@ def get_fit_time_plot():
 @app.route('/test-accuracy-plot', methods=['GET'])
 def get_test_accuracy_plot():
     return send_file(classification_service.build_test_accuracy_plot(), attachment_filename='test-accuracy-plot.png')
+
+
+@app.route('/tokens', methods=['GET'])
+def get_active_tokens():
+    return json.dumps(session_service.get_active_tokens())
+
+
+@app.route('/files', methods=['DELETE'])
+def delete_user_files():
+    file_utils.delete_user_files(request.args['pattern'])
+
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/files', methods=['GET'])
+def get_user_files_names():
+    return json.dumps(file_utils.get_user_files_names(request.args['pattern']))
 
 
 @app.before_request

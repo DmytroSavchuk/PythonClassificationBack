@@ -1,11 +1,13 @@
 import io
 import os
+import shutil
 from pathlib import Path
 
 import numpy as np
 
 from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ClassifierFactory import classifier_factory
+from Classification_Project.ConsoleLogger import console_logger
 from Classification_Project.SessionService import *
 
 
@@ -58,6 +60,23 @@ class FileUtils:
             os.remove(filepath)
 
         return file
+
+    def delete_user_files(self, pattern='*'):
+        if pattern == '*':
+            console_logger.info("Clearing tmp folder...")
+
+            shutil.rmtree(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))
+            os.mkdir(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))
+        else:
+            for file_name in self.get_user_files_names(pattern):
+                os.remove(f'{ApplicationConstants.get_constant("UPLOADS_FOLDER_PATH")}/{file_name}')
+
+    def get_user_files_names(self, pattern='*'):
+        if pattern == '*':
+            return os.listdir(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))
+
+        return list(filter(lambda f: pattern in f,
+                           os.listdir(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))))
 
 
 file_utils = FileUtils()

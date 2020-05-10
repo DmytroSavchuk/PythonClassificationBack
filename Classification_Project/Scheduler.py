@@ -5,6 +5,7 @@ import time
 
 import schedule
 
+from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ConsoleLogger import console_logger
 
 tmp_clear_hour_interval = 6
@@ -27,6 +28,6 @@ def execute():
 def __clear_tmp_folder_job():
     console_logger.info("Clearing tmp folder...")
 
-    shutil.rmtree('resources/uploads')
+    shutil.rmtree(ApplicationConstants.get_constant("UPLOADS_FOLDER_PATH"))
 
-    os.mkdir('resources/uploads')
+    os.mkdir(ApplicationConstants.get_constant("UPLOADS_FOLDER_PATH"))
