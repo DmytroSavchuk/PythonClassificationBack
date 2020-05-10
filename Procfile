@@ -1,1 +1,1 @@
-web gunicorn Classification_Project.ClassificationController:app
+web gunicorn Classification_Project.Controller:app
