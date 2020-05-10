@@ -43,15 +43,17 @@ class ClassificationService:
     def get_classification_result_archive(self, method_name):
         try:
             if not file_utils.is_classification_result_files_exists(method_name):
-                console_logger.error('Can\'t get data. No calculations were performed.')
-                raise Exception('Can\'t get data. No calculations were performed.')
+                e = Exception('Can\'t get data. No calculations were performed.')
+
+                console_logger.error(str(e), e)
+                raise e
 
             result = self.archiver.archive_method_results(method_name)
 
             return result
 
         except Exception as e:
-            console_logger.error(f'Classification failed. {str(e)}')
+            console_logger.error(f'Classification failed. {str(e)}', e)
             raise BadRequest(str(e))
 
     def get_available_methods(self):

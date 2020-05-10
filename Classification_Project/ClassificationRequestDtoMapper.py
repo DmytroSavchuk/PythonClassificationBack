@@ -16,8 +16,8 @@ class ClassificationRequestDtoMapper:
             if result.is_polynomial_used:
                 result.polynomial_params_dictionary = dictionary['polynomial_params_dictionary']
                 result.polynomial_name = dictionary['polynomial_name']
-        except Exception:
-            console_logger.error('Can\'t map parameters. Some parameters are missed or are invalid.')
+        except Exception as e:
+            console_logger.error('Can\'t map parameters. Some parameters are missed or are invalid.', e)
             raise BadRequest('Can\'t map parameters. Some parameters are missed or are invalid.')
 
         return result
