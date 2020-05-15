@@ -8,7 +8,7 @@ from Classification_Project.FileUtils import file_utils
 
 
 class Plotter:
-    def build_histogram(self, method_params, y_param_name, descending=False):
+    def test(self, method_params, y_param_name, title, x_label=None, y_label=None, descending=False):
         self.__config_plot()
 
         x = []
@@ -23,11 +23,54 @@ class Plotter:
 
         plt.bar(np.array(self.__prepare_method_labeles(x)), np.array(y))
 
+        plt.text(x=[1, 2, 3, 4, 5, 6, 7], y=y, s=[1, 2, 3, 4, 5, 6, 7])
+
+        plt.title(title)
+        if x_label is not None:
+            plt.xlabel(x_label)
+        if y_label is not None:
+            plt.ylabel(y_label)
+
         result = self.__read_plot_as_stream(plt)
 
         plt.close()
 
         return result
+
+    def build_histogram(self, method_params, y_param_name, title, x_label=None, y_label=None, descending=False):
+        self.__config_plot()
+
+        x = []
+        y = []
+
+        method_names = list(method_params.keys())
+        method_names.sort(reverse=descending, key=lambda m: getattr(method_params[m], y_param_name))
+
+        for method in method_names:
+            x.append(method)
+            y.append(getattr(method_params[method], y_param_name))
+
+        plt.bar(np.array(self.__prepare_method_labeles(x)), np.array(y), width=0.5)
+
+        self.draw_bar_labels(y, len(x))
+
+        plt.title(title)
+        if x_label is not None:
+            plt.xlabel(x_label)
+        if y_label is not None:
+            plt.ylabel(y_label)
+
+        result = self.__read_plot_as_stream(plt)
+
+        plt.close()
+
+        return result
+
+    def draw_bar_labels(self, y, x_length):
+        y_max = max(y)
+
+        for i in range(x_length):
+            plt.text(x=i, y=y[i] + y_max / 100, s='%.5f' % y[i], size=10, horizontalalignment='center')
 
     def __config_plot(self):
         font = {'weight': 'regular',

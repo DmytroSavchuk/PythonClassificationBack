@@ -76,10 +76,12 @@ class ClassificationService:
         return result
 
     def build_fit_time_plot(self):
-        return plotter.build_histogram(self.compare_classification(), 'fit_time')
+        return plotter.build_histogram(self.compare_classification(), 'fit_time', 'Training time', 'Method names',
+                                       'Training time, seconds')
 
     def build_test_accuracy_plot(self):
-        return plotter.build_histogram(self.compare_classification(), 'test_accuracy', descending=True)
+        return plotter.build_histogram(self.compare_classification(), 'test_accuracy', 'Test accuracy', 'Method names',
+                                       'Accuracy, %', descending=True)
 
     def __classify(self, classification_dto):
         console_logger.info('Extracting train data')
