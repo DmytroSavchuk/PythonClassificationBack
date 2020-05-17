@@ -1,5 +1,6 @@
 import io
 import os
+import pickle
 import shutil
 from pathlib import Path
 
@@ -81,6 +82,16 @@ class FileUtils:
                                os.listdir(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))))
 
         return []
+
+    def save_session_based_object(self, object_to_save, file_name):
+        file_path = self.get_session_based_file_path(file_name)
+
+        pickle.dump(object_to_save, open(file_path, 'wb'), pickle.HIGHEST_PROTOCOL)
+
+    def get_session_based_object(self, file_name):
+        file_path = self.get_session_based_file_path(file_name)
+
+        return pickle.load(open(file_path, 'rb'))
 
 
 file_utils = FileUtils()

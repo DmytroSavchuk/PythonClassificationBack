@@ -73,15 +73,25 @@ class ClassificationService:
             file_utils.numpy_save_session_based_txt_file(result[method_name].test_prediction,
                                                          method_name + '_test_predictions.csv')
 
+        file_utils.save_session_based_object(result, 'compare-classification-result.bin')
+
         return result
 
     def build_fit_time_plot(self):
-        return plotter.build_histogram(self.compare_classification(), 'fit_time', 'Training time', 'Method names',
-                                       'Training time, seconds')
+        if not file_utils.is_file_for_session('compare-classification-result.bin'):
+            raise BadRequest('No calculations were performed. Before generating plots you should perform '
+                             'compare classification.')
+
+        return plotter.build_histogram(file_utils.get_session_based_object('compare-classification-result.bin'),
+                                       'fit_time', 'Training time', 'Method names', 'Training time, seconds')
 
     def build_test_accuracy_plot(self):
-        return plotter.build_histogram(self.compare_classification(), 'test_accuracy', 'Test accuracy', 'Method names',
-                                       'Accuracy, %', descending=True)
+        if not file_utils.is_file_for_session('compare-classification-result.bin'):
+            raise BadRequest('No calculations were performed. Before generating plots you should perform '
+                             'compare classification.')
+
+        return plotter.build_histogram(file_utils.get_session_based_object('compare-classification-result.bin'),
+                                       'test_accuracy', 'Test accuracy', 'Method names', 'Accuracy, %', descending=True)
 
     def __classify(self, classification_dto):
         console_logger.info('Extracting train data')
