@@ -64,10 +64,42 @@ def classify_and_get_info():
     return classification_service.classify_and_get_info(request_params).serialize
 
 
+@app.route('/compare-classification', methods=['GET'])
+def classify_with_all_methods():
+    return classification_service.map_to_default_response_dto(classification_service.compare_classification()).serialize
+
+
 @app.route('/classification-data', methods=['GET'])
 def classify_and_get_data():
-    return send_file(classification_service.get_classification_result_archive(),
+    return send_file(classification_service.get_classification_result_archive(request.args['method_name']),
                      attachment_filename='classification_results.zip', as_attachment=True)
+
+
+@app.route('/fit-time-plot', methods=['GET'])
+def get_fit_time_plot():
+    return send_file(classification_service.build_fit_time_plot(), attachment_filename='fit-time-plot.png')
+
+
+@app.route('/test-accuracy-plot', methods=['GET'])
+def get_test_accuracy_plot():
+    return send_file(classification_service.build_test_accuracy_plot(), attachment_filename='test-accuracy-plot.png')
+
+
+@app.route('/tokens', methods=['GET'])
+def get_active_tokens():
+    return json.dumps(session_service.get_active_tokens())
+
+
+@app.route('/files', methods=['DELETE'])
+def delete_user_files():
+    file_utils.delete_user_files(request.args['pattern'])
+
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/files', methods=['GET'])
+def get_user_files_names():
+    return json.dumps(file_utils.get_user_files_names(request.args['pattern']))
 
 
 @app.before_request

@@ -1,18 +1,65 @@
 {
   "name": "SVC",
+  "label": "SVC",
   "methodArgs": {
-    "C": "NUMBER",
-    "kernel": "STRING",
-    "degree": "NUMBER",
-    "gamma": "NUMBER",
-    "coef0": "NUMBER",
-    "shrinking": "BOOLEAN",
-    "probability": "BOOLEAN",
-    "tol": "NUMBER",
-    "cache_size": "NUMBER",
-    "verbose": "BOOLEAN",
-    "random_state": "NUMBER",
-    "max_iter": "NUMBER",
-    "decision_function_shape": "STRING"
+    "C": {
+      "type": "NUMBER",
+      "defaultValue": 0.3
+    },
+    "kernel": {
+      "type": "STRING_ENUM",
+      "defaultValue": "linear",
+      "possibleValues": ["linear", "poly", "rbf", "sigmoid", "precomputed"]
+    },
+    "degree": {
+      "type": "NUMBER",
+      "defaultValue": 3
+    },
+    "gamma": {
+      "type": "STRING_ENUM",
+      "defaultValue": "auto",
+      "possibleValues": ["auto", "scale"]
+    },
+    "coef0": {
+      "type": "NUMBER",
+      "defaultValue": 0.0
+    },
+    "shrinking": {
+      "type": "BOOLEAN",
+      "defaultValue": true
+    },
+    "probability": {
+      "type": "BOOLEAN",
+      "defaultValue": false
+    },
+    "tol": {
+      "type": "NUMBER",
+      "defaultValue": 0.001
+    },
+    "cache_size": {
+      "type": "NUMBER",
+      "defaultValue": 200
+    },
+    "class_weight": {
+      "type": "UNKNOWN",
+      "defaultValue": null
+    },
+    "verbose": {
+      "type": "BOOLEAN",
+      "defaultValue": false
+    },
+    "max_iter": {
+      "type": "NUMBER",
+      "defaultValue": -1
+    },
+    "decision_function_shape": {
+      "type": "STRING_ENUM",
+      "defaultValue": "ovr",
+      "possibleValues": ["ovr", "ovo"]
+    },
+    "random_state": {
+      "type": "NUMBER",
+      "defaultValue": null
+    }
   }
 }

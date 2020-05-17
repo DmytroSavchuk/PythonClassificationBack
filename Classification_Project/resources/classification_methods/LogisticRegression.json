@@ -1,8 +1,21 @@
 {
   "name": "LogisticRegression",
+  "label": "Logistic regression",
   "methodArgs": {
-    "class_weight": "STRING",
-    "multi_class": "STRING",
-    "solver": "STRING"
+    "class_weight": {
+      "type": "STRING_ENUM",
+      "defaultValue": "balanced",
+      "possibleValues": ["balanced", null]
+    },
+    "multi_class": {
+      "type": "STRING_ENUM",
+      "defaultValue": "multinomial",
+      "possibleValues": ["multinomial", "ovr", "auto"]
+    },
+    "solver": {
+      "type": "STRING_ENUM",
+      "defaultValue": "newton-cg",
+      "possibleValues": ["newton-cg", "lbfgs", "liblinear", "sag", "saga"]
+    }
   }
 }

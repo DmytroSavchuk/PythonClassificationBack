@@ -1,9 +1,22 @@
 {
   "name": "ExtraTreesClassifier",
+  "label": "Extra trees classifier",
   "methodArgs": {
-    "n_estimators": "NUMBER",
-    "max_depth": "NUMBER",
-    "min_samples_split": "NUMBER",
-    "random_state": "NUMBER"
+    "n_estimators": {
+      "type": "NUMBER",
+      "defaultValue": 10
+    },
+    "max_depth": {
+      "type": "NUMBER",
+      "defaultValue": null
+    },
+    "min_samples_split": {
+      "type": "NUMBER",
+      "defaultValue": 2
+    },
+    "random_state": {
+      "type": "NUMBER",
+      "defaultValue": 0
+    }
   }
 }
