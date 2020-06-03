@@ -27,7 +27,6 @@ class ClassificationService:
 
     def classify_and_get_info(self, classification_dto):
         try:
-            # classification_result = self.__classify(classification_dto)
             classification_result = self.__classify_image(classification_dto)
 
             file_utils.numpy_save_session_based_txt_file(classification_result.train_prediction,
@@ -121,13 +120,6 @@ class ClassificationService:
         train_data = file_utils.get_session_based_object('train_data.json')
         console_logger.info('Extracting test data')
         test_data = file_utils.get_session_based_object('test_data.json')
-
-        # if classification_dto.is_polynomial_used:
-        #     console_logger.info("Data transformation...")
-        #     self.__fit(train_data, test_data)
-        #     self.__polynomial_transformation(train_data, test_data, classification_dto.polynomial_name,
-        #                                      classification_dto.polynomial_params_dictionary)
-        #     console_logger.info('Data transformation finished')
 
         classifier = self.classifier_factory.get_classifier(classification_dto.classifier_name,
                                                             classification_dto.classifier_params_dictionary)

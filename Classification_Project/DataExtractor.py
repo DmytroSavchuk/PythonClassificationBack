@@ -25,9 +25,6 @@ class DataExtractor:
         with zipfile.ZipFile(archive_path, 'r') as zipObj:
             zipObj.extractall(tmp_images_path)
 
-    def __build_image_data(self, tmp_images_path):
-        pass
-
     def __resize_image(image_path, result_path):
         img = Image.open(image_path)
         img = img.resize((ApplicationConstants.get_constant('CLASSIFICATION_IMAGE_WIDTH'),
