@@ -1,4 +1,4 @@
-PIL
+PI==0.1.2
 matplotlib
 appdirs==1.4.3
 click==7.1.1
