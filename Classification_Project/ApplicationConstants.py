@@ -12,6 +12,10 @@ CONSTANTS_MAP = {
     'AVAILABLE_CLASSIFICATION_METHODS_FOLDER_PATH': 'Classification_Project/resources/classification_methods'
     if is_production else 'resources/classification_methods',
     'UPLOADS_FOLDER_PATH': 'Classification_Project/resources/uploads' if is_production else 'resources/uploads',
+    'IMAGE_ARCHIVES_PATH': 'Classification_Project/resources/uploads/images' if is_production else
+    'resources/uploads/images',
+    'CLASSIFICATION_IMAGE_WIDTH': 32,
+    'CLASSIFICATION_IMAGE_HEIGHT': 32,
 }
 
 

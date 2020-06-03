@@ -2,18 +2,70 @@ import io
 import os
 import pickle
 import shutil
+import uuid
+import zipfile
 from pathlib import Path
 
 import numpy as np
+from PIL import Image
 
 from Classification_Project.ApplicationConstants import ApplicationConstants
 from Classification_Project.ClassifierFactory import classifier_factory
 from Classification_Project.ConsoleLogger import console_logger
+from Classification_Project.Data import Data
+from Classification_Project.ImageUtils import image_utils
 from Classification_Project.SessionService import *
 
 
 class FileUtils:
-    def save_session_based_txt_file(self, file, file_name=''):
+    def save_session_based_image_data(self, archive, archive_name, file_name):
+        self.save_session_based_file(archive, archive_name)
+
+        images_path = self.__extract_image_data(self.get_session_based_file_path(archive_name))
+        self.__resize_images(images_path)
+
+        self.__generate_image_dataset_file(images_path, file_name)
+
+        shutil.rmtree(images_path)
+        os.remove(self.get_session_based_file_path(archive_name))
+
+    def __extract_image_data(self, archive_path):
+        tmp_images_path = f'{ApplicationConstants.get_constant("UPLOADS_FOLDER_PATH")}/{uuid.uuid1()}'
+
+        with zipfile.ZipFile(archive_path, 'r') as zipObj:
+            zipObj.extractall(tmp_images_path)
+
+        return tmp_images_path
+
+    def __resize_images(self, tmp_images_path):
+        files = []
+        for (dirpath, dirnames, filenames) in os.walk(tmp_images_path):
+            for f in filenames:
+                files.append(f'{dirpath}/{f}')
+
+        for file_name in files:
+            self.__resize_image(file_name)
+
+    def __resize_image(self, image_path):
+        img = Image.open(image_path)
+        img = img.resize((ApplicationConstants.get_constant('CLASSIFICATION_IMAGE_WIDTH'),
+                          ApplicationConstants.get_constant('CLASSIFICATION_IMAGE_HEIGHT')), Image.ANTIALIAS)
+        img.save(image_path)
+
+        return img
+
+    def __generate_image_dataset_file(self, images_path, file_name):
+        x = []
+        y = []
+
+        for (dirpath, dirnames, filenames) in os.walk(images_path):
+            for f in filenames:
+                x.append(image_utils.flatten_image_array(image_utils.convert_image_to_np_array(f'{dirpath}/{f}')))
+                y.append(Path(f'{dirpath}/{f}').parent.name)
+
+        self.save_session_based_object(Data(x, y), file_name)
+
+    def save_session_based_file(self, file, file_name=''):
         if not Path(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH')).is_dir():
             os.mkdir(ApplicationConstants.get_constant('UPLOADS_FOLDER_PATH'))
 
@@ -27,7 +79,7 @@ class FileUtils:
 
         file_path = self.get_session_based_file_path(file_name)
 
-        np.savetxt(file_path, file)
+        np.savetxt(file_path, file, fmt="%s")
 
     def is_classification_result_files_exists(self, method_name='*'):
         if method_name == '*':
