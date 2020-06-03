@@ -28,20 +28,14 @@ def home_page():
 
 @app.route('/test-data', methods=['POST'])
 def upload_test_data():
-    if request.files['file'].content_type == 'application/zip':
-        file_utils.save_session_based_image_data(request.files['file'], 'test_data.zip', 'test_data.json')
-    else:
-        file_utils.save_session_based_file(request.files['file'], 'test_data.txt')
+    file_utils.save_session_based_image_data(request.files['file'], 'test_data.zip', 'test_data.json')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/train-data', methods=['POST'])
 def upload_train_data():
-    if request.files['file'].content_type == 'application/zip':
-        file_utils.save_session_based_image_data(request.files['file'], 'train_data.zip', 'train_data.json')
-    else:
-        file_utils.save_session_based_file(request.files['file'], 'train_data.txt')
+    file_utils.save_session_based_image_data(request.files['file'], 'train_data.zip', 'train_data.json')
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
